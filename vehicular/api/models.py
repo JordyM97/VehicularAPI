@@ -1,28 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
 
+
+    
 # Create your models here.
-
 class Chat(models.Model):
     type = models.CharField(max_length=200)
-    userID1 = models.ManyToManyField(get_user_model(), related_name="userID1", blank=True)
-    userID2 = models.ManyToManyField(get_user_model(), related_name="userID2",blank=True)
+    userID1 = models.ManyToManyField(User, related_name="userID1", blank=True)
+    userID2 = models.ManyToManyField(User, related_name="userID2",blank=True)
     date = models.DateField()
 
 class UserChat(models.Model):
-    user = models.ManyToManyField(get_user_model(), blank=True)
+    user = models.ManyToManyField(User, blank=True)
     chat = models.ManyToManyField(Chat, blank=True)
     date = models.DateField()
 
 class Message(models.Model):
-    user = models.ManyToManyField(get_user_model(), blank=True)
+    user = models.ManyToManyField(User, blank=True)
     chat = models.ManyToManyField(Chat, blank=True)
     sendDate = models.DateField()
     content = models.CharField(max_length=200)
 
 class Employee(models.Model):
-    user = models.ManyToManyField(get_user_model(), blank=True)
+    user = models.ManyToManyField(User, blank=True)
 
 class Role(models.Model):
     employee = models.ManyToManyField(Employee, blank=True)
@@ -57,14 +57,15 @@ class Vehicle(models.Model):
     type = models.CharField(max_length=25)
     model = models.CharField(max_length=25)
     color = models.CharField(max_length=25)
+    
 
 class Driver(models.Model):
-    user = models.ManyToManyField(get_user_model())
+    user = models.ManyToManyField(User)
     rate = models.CharField(max_length=25)
     currentVehicle = models.ManyToManyField(Vehicle)
 
 class Client(models.Model):
-    user = models.ManyToManyField(get_user_model())
+    user = models.ManyToManyField(User)
     rate = models.DecimalField(decimal_places=2,max_digits=2)
 
 class Location(models.Model):
@@ -109,6 +110,6 @@ class Service(models.Model):
 
 class Details(models.Model):
     service = models.ManyToManyField(Service)
-    user = models.ManyToManyField(get_user_model())
+    user = models.ManyToManyField(User)
     description = models.CharField(max_length=25)
 

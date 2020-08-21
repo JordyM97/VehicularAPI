@@ -1,19 +1,28 @@
-from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.response import Response
 from .models import *
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from .serializers import *
+from rest_framework.views import APIView
+
 # Create your views here.
 
-class UserList(ListView):
-    model = get_user_model()
 
-class UserDetail(DetailView):
-    model = get_user_model()
+class VehicleList(generics.ListAPIView):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer
 
-class UserCreate(CreateView):
-    model = get_user_model()
+class GetVehicle(generics.RetrieveAPIView):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer
 
-class UserUpdate(UpdateView):
-    model = get_user_model()
+class CreateVehicle(generics.CreateAPIView):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer
 
-class UserDelete(DeleteView):
-    model = get_user_model()
+class UpdateVehicle(generics.UpdateAPIView):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer   
+
+class DeleteVehicle(generics.DestroyAPIView):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer
